@@ -1,5 +1,5 @@
 import pandas as pd
-from helpers.parser import parse
+from whatsapp_helpers.parser import parse
 from constants import discrete_columns, continuous_columns
 
 data = parse()

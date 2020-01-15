@@ -1,9 +1,21 @@
 import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 
 def getTopAuthorsByMessages(df, num):
     author_value_counts = df['Author'].value_counts() # Number of messages per author
     top_n_author_value_counts = author_value_counts.head(num) # Number of messages per author for the top 10 most active authors
-    top_n_author_value_counts.plot.pie() # Plot a bar chart using pandas built-in plotting apis
+    # top_n_author_value_counts.plot.pie() # Plot a bar chart using pandas built-in plotting apis
+    
+    print(top_n_author_value_counts)
+    # fig, axes = plt.subplots(1, 2)  # horizontal
+    fig, axes = plt.subplots(2)  # vertical
+    axes[0].title.set_text('First Plot')
+    axes[1].title.set_text('Second Plot')
+    plt.gcf().canvas.set_window_title('Analysis Visualization')
+    top_n_author_value_counts.plot.pie(ax=axes[0])
+    top_n_author_value_counts.plot.pie(ax=axes[1])
+
     plt.show()
 
 def getTopAuthorsByWords(df, num):
@@ -12,6 +24,8 @@ def getTopAuthorsByWords(df, num):
     top_10_sorted_total_word_count_grouped_by_author.plot.barh()
     plt.xlabel('Number of Words')
     plt.ylabel('Authors')
+    plt.title('Authors by Words')
+    plt.gcf().canvas.set_window_title('Analysis Visualization')
     plt.show()
 
 def getTopAuthorsByLetters(df, num):
@@ -20,6 +34,8 @@ def getTopAuthorsByLetters(df, num):
     top_n_sorted_total_letter_count_grouped_by_author.plot.barh()
     plt.xlabel('Number of Letters')
     plt.ylabel('Authors')
+    plt.title('Authors by Letters')
+    plt.gcf().canvas.set_window_title('Analysis Visualization')
     plt.show()
 
 def getFrequencyOfWordCount(df, num):
@@ -56,4 +72,11 @@ def getMostMessagesByHour(df, num):
     df['Hour'].value_counts().head(num).sort_index(ascending=False).plot.barh() # Top 10 Dates on which the most number of messages were sent
     plt.xlabel('Number of Messages')
     plt.ylabel('Hour of day')
+    plt.show()
+
+def messageSentimentPolarityScatter(df):
+    df = df.groupby(['real-sentiment-polarity'])['Message'].count()
+    df = pd.DataFrame(df, dtype=np.int8).reset_index()
+    print(df)
+    df.plot.scatter(x='real-sentiment-polarity', y='Message')
     plt.show()

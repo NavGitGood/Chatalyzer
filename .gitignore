@@ -3,3 +3,4 @@ venv
 data
 Chatalyzer/__pycache__
 Chatalyzer/helpers/__pycache__
+__pycache__
